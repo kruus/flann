@@ -12,7 +12,6 @@ set(FLANN_VERSION 1.9.1)
 DISSECT_VERSION()
 GET_OS_INFO()
 
-
 # detect if using the Clang compiler
 if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -46,10 +45,16 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+set( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" ) # -before- any add-executable ...
 # set output path for tests
 set(TEST_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/test)
 
 option(BUILD_C_BINDINGS "Build C bindings" ON)
+
+# if you sudo apt-get install ruby-bundler, you may be able to run
+# the ruby portion of 'make test'
+option(USE_RUBY "Have ruby and 'bundle' command'" OFF)
+
 option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)
 option(BUILD_MATLAB_BINDINGS "Build Matlab bindings" ON)
 option(BUILD_CUDA_LIB "Build CUDA library" OFF)

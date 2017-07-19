@@ -23,6 +23,6 @@ setup(name='flann',
       license='BSD',
       url='http://www.cs.ubc.ca/~mariusm/flann/',
       packages=['pyflann', 'pyflann.lib'],
-      package_dir={'pyflann.lib': find_path() },
+      package_dir={'pyflann.lib': find_path(), 'pyflann' : '@PROJECT_SOURCE_DIR@/src/python' },
       package_data={'pyflann.lib': ['libflann.so', 'flann.dll', 'libflann.dll', 'libflann.dylib']}, 
 )

@@ -10,6 +10,7 @@ add_dependencies(test tests)
 
 set(EXECUTABLE_OUTPUT_PATH ${TEST_OUTPUT_PATH})
 
+message(STATUS "PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE}")
 if (PYTHON_EXECUTABLE) 
     flann_download_test_data(sift10K.h5 0964a910946d2dd5fe28337507a8abc3)
     flann_download_test_data(sift10K_byte.h5 f835e0148df4618a81f67febfda2b4d0)
@@ -19,6 +20,8 @@ if (PYTHON_EXECUTABLE)
     flann_download_test_data(brief100K.h5 e1e781c0955917bc2f0a27b6344c2342)
 endif()
 
+message(STATUS "GTEST_FOUND ${GTEST_FOUND}")
+message(STATUS "HDF5_FOUND ${HDF5_FOUND}")
 if (GTEST_FOUND AND HDF5_FOUND)
     include_directories(${HDF5_INCLUDE_DIR})
 
@@ -55,6 +58,7 @@ if (GTEST_FOUND AND HDF5_FOUND)
 
 endif()
 
+message(STATUS "BUILD_CUDA_LIB ${BUILD_CUDA_LIB}")
 if (GTEST_FOUND AND HDF5_FOUND AND BUILD_CUDA_LIB)
     set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS};-Xcompiler;-fPIC;-arch=sm_13" )
     if (NVCC_COMPILER_BINDIR)
@@ -76,8 +80,10 @@ endif()
 
 #---------- ruby spec ----------------
 if (BUILD_C_BINDINGS)
-    add_custom_target(flann_ruby_spec
-                    COMMAND bundle exec rake spec
-                    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/ruby)
-    add_dependencies(test flann_ruby_spec)
+    if (USE_RUBY)
+        add_custom_target(flann_ruby_spec
+            COMMAND bundle exec rake spec
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/ruby)
+        add_dependencies(test flann_ruby_spec)
+    endif()
 endif()
