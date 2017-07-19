@@ -139,12 +139,12 @@ public:
 
     using BaseClass::buildIndex;
     
-    void addPoints(const Matrix<ElementType>& points, float rebuild_threshold = 2)
+    void addPoints(const Matrix<ElementType>& points, std::vector<size_t> *ids, float rebuild_threshold = 2)
     {
         assert(points.cols==veclen_);
 
         size_t old_size = size_;
-        extendDataset(points);
+        extendDataset(points, ids);
         
         if (rebuild_threshold>1 && size_at_build_*rebuild_threshold<size_) {
             buildIndex();
@@ -265,7 +265,7 @@ protected:
         /* Construct the randomized trees. */
         for (int i = 0; i < trees_; i++) {
             /* Randomize the order of vectors to allow for unbiased sampling. */
-            std::random_shuffle(ind.begin(), ind.end());
+            rand_shuffle(ind.begin(), ind.end());
             tree_roots_[i] = divideTree(&ind[0], int(size_) );
         }
         delete[] mean_;

@@ -148,7 +148,12 @@ public:
 
     void addPoints(const Matrix<ElementType>& points, float rebuild_threshold = 2)
     {
-        nnIndex_->addPoints(points, rebuild_threshold);
+        nnIndex_->addPoints(points, NULL, rebuild_threshold);
+    }
+
+    void addPoints(const Matrix<ElementType>& points, std::vector<size_t> &ids, float rebuild_threshold = 2)
+    {
+        nnIndex_->addPoints(points, &ids, rebuild_threshold);
     }
 
     /**
@@ -366,6 +371,18 @@ public:
     {
     	return nnIndex_->radiusSearch(queries, indices, dists, radius, params);
     }
+
+    /**
+     *
+     */
+#ifdef FLANN_USE_OPENCL
+    void buildCLKnnSearch(size_t knn,
+                          const SearchParams& params,
+                          cl_command_queue cq = NULL)
+    {
+        return nnIndex_->buildCLKnnSearch(knn, params, cq);
+    }
+#endif /* FLANN_USE_OPENCL */
 
 private:
     IndexType* load_saved_index(const Matrix<ElementType>& dataset, const std::string& filename, Distance distance)
