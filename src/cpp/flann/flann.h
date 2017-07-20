@@ -197,25 +197,25 @@ FLANN_EXPORT int flann_add_points_get_ids(
         size_t* ids,
         float rebuild_threshold);
 
-FLANN_EXPORT int flann_add_points_float_get_ids(
+FLANN_EXPORT int flann_add_points_get_ids_float(
         flann_index_t index_ptr,
         float* points, int rows, int columns,
         size_t* ids,
         float rebuild_threshold);
 
-FLANN_EXPORT int flann_add_points_double_get_ids(
+FLANN_EXPORT int flann_add_points_get_ids_double(
         flann_index_t index_ptr,
         double* points, int rows, int columns,
         size_t* ids,
         float rebuild_threshold);
 
-FLANN_EXPORT int flann_add_points_byte_get_ids(
+FLANN_EXPORT int flann_add_points_get_ids_byte(
         flann_index_t index_ptr,
         unsigned char* points, int rows, int columns,
         size_t* ids,
         float rebuild_threshold);
 
-FLANN_EXPORT int flann_add_points_int_get_ids(
+FLANN_EXPORT int flann_add_points_get_ids_int(
         flann_index_t index_ptr,
         int* points, int rows, int columns,
         size_t* ids,
